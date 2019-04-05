@@ -385,7 +385,10 @@ class Preview extends React.Component {
         const submit = data => this.props.reportProject(this.state.projectId, data, this.props.user.token);
         if (this.getProjectThumbnail) {
             this.getProjectThumbnail(thumbnail => {
-                const data = Object.assign({}, formData, {thumbnail});
+                const data = Object.assign({}, formData, {
+                    // remove the leading and trailing strings for the image data
+                    thumbnail: thumbnail.replace(/(?:^data:image\/png;base64,)|(?:==$)/gi, '')
+                });
                 submit(data);
             });
         } else {
